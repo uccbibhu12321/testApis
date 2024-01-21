@@ -394,18 +394,30 @@ router.get('/allUsersWithDistance', passport.authenticate('jwt', { session: fals
  *     security:
  *       - jwt: []
  *     parameters:
- *       - in: body
- *         name: targetUserId
- *         schema:
- *           type: string
- *         description: The ID of the target user.
+ *       - in: header
+ *         name: Authorization
+ *         description: JWT token for authentication.
  *         required: true
+ *         type: string
  *       - in: body
- *         name: action
- *         schema:
- *           type: string
- *         description: The action to perform (follow or unfollow).
+ *         name: followRequest
+ *         description: Request body for following or unfollowing a user.
  *         required: true
+ *         schema:
+ *           type: object
+ *           properties:
+ *             targetUserId:
+ *               type: string
+ *               description: The ID of the target user.
+ *             action:
+ *               type: string
+ *               enum:
+ *                 - follow
+ *                 - unfollow
+ *               description: The action to perform (follow or unfollow).
+ *           example:
+ *             targetUserId: "user123"
+ *             action: "follow"
  *     responses:
  *       200:
  *         description: Success response with a message.
@@ -436,25 +448,11 @@ router.get('/allUsersWithDistance', passport.authenticate('jwt', { session: fals
  *     security:
  *       - jwt: []
  *     parameters:
- *       - in: query
- *         name: longitude
- *         schema:
- *           type: number
- *         description: The longitude of the logged-in user's location.
+ *       - in: header
+ *         name: Authorization
+ *         description: JWT token for authentication.
  *         required: true
- *       - in: query
- *         name: latitude
- *         schema:
- *           type: number
- *         description: The latitude of the logged-in user's location.
- *         required: true
- *     requestBody:
- *       description: Additional request body for the API.
- *       required: false
- *       content:
- *         application/json:
- *           example:
- *             key: value
+ *         type: string
  *     responses:
  *       200:
  *         description: Success response with a list of users and distances.
@@ -475,6 +473,7 @@ router.get('/allUsersWithDistance', passport.authenticate('jwt', { session: fals
  *             example:
  *               error: Internal Server Error
  */
+
 
 
 

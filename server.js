@@ -20,7 +20,6 @@ const swaggerOptions = {
   // List of files to be processed
   apis: ['./controllers/userController.js'],
 };
-
 // Initialize swagger-jsdoc
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
 
@@ -36,19 +35,18 @@ app.use(passport.initialize());
 
 // Db config
 const db = require('./config/keys').mongoURI;
-
+app.get('/', (req, res) => {
+    return res.status(200).json({
+        message: 'Hello World'
+    });
+});
 // Connect to MongoDB
 mongoose
   .connect(db)
   .then(() => console.log('MongoDB connected'))
   .catch((err) => console.log(err));
-
-// Use routes
+const port = process.env.PORT || 80; // default port is 3000
 app.use('/api/users', users);
-const options = {
-   key: fs.readFileSync('./ssl/privkey.pem'),
-   cert: fs.readFileSync('./ssl/fullchain.pem')
- };
- https.createServer(options, app).listen(3000, () => {
-   console.log("HTTPS Server is running on port 3000")
- });
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+});
