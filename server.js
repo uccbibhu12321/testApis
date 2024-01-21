@@ -5,7 +5,7 @@ const passport = require('./config/passport-config');
 const users = require('./controllers/userController');
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
-
+var http = require('http');
 const app = express();
 
 // Define Swagger configuration options
@@ -46,5 +46,7 @@ mongoose
 // Use routes
 app.use('/api/users', users);
 
-const port = 3000;
-app.listen(port, () => console.log('Server connected'));
+http.createServer(function (req, res) {
+    res.write('Hello World!'); //write a response to the client
+    res.end(); //end the response
+  }).listen(8080); //the server object listens on port 8080
