@@ -1,0 +1,26 @@
+# Node.js
+node_modules/
+
+# Logs
+logs/
+*.log
+
+# Dependency directories
+lib/
+vendor/
+
+# macOS
+.DS_Store
+
+# Editor-specific files
+.vscode/
+.idea/
+
+# Environment variables file
+.env
+
+# Ignore npm-debug.log
+npm-debug.log
+
+# Ignore Yarn Integrity file
+.yarn-integrity
