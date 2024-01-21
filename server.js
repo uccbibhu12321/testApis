@@ -5,7 +5,7 @@ const passport = require('./config/passport-config');
 const users = require('./controllers/userController');
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
-var http = require('http');
+var https = require('https');
 const app = express();
 
 // Define Swagger configuration options
@@ -45,8 +45,10 @@ mongoose
 
 // Use routes
 app.use('/api/users', users);
-
-http.createServer(function (req, res) {
-    res.write('Hello World!'); //write a response to the client
-    res.end(); //end the response
-  }).listen(8080); //the server object listens on port 8080
+const options = {
+   key: fs.readFileSync('./ssl/privkey.pem'),
+   cert: fs.readFileSync('./ssl/fullchain.pem')
+ };
+ https.createServer(options, app).listen(3000, () => {
+   console.log("HTTPS Server is running on port 3000")
+ });
